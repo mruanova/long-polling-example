@@ -6,4 +6,5 @@ The server will hold the request open until it has new data to send, and the cli
 
 `npm init -y`
 `npm install express`
+`npm install ejs`
 `node server.js`

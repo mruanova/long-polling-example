@@ -29,3 +29,14 @@ app.get('/poll', (req, res) => {
 app.listen(port, () => {
     console.log(`Long polling server running on http://localhost:${port}`);
 });
+
+// static content 
+var path = require("path");
+app.use(express.static(path.join(__dirname, "./static")));
+// setting up ejs and our views folder
+app.set('views', path.join(__dirname, './views'));
+app.set('view engine', 'ejs');
+// root route to render the index.ejs view
+app.get('/', function(req, res) {
+ res.render("index");
+})
