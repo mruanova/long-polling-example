@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Long Polling Example</title>
+</head>
+
+<body>
+    <h1>Long Polling Messages</h1>
+    <div id="messages"></div>
+
+    <script>
+        function pollServer() {
+            fetch('/poll')
+                .then(response => response.json())
+                .then(data => {
+                    const messageDiv = document.getElementById('messages');
+                    const newMessage = document.createElement('div');
+                    newMessage.textContent = `Received: ${data.message}`;
+                    messageDiv.appendChild(newMessage);
+
+                    // Immediately poll again
+                    pollServer();
+                })
+                .catch(error => {
+                    console.error('Polling error:', error);
+                    // Retry polling after a delay if there is an error
+                    setTimeout(pollServer, 3000);
+                });
+        }
+
+        // Start polling when the page loads
+        window.onload = function () {
+            pollServer();
+        };
+    </script>
+</body>
+
+</html>
